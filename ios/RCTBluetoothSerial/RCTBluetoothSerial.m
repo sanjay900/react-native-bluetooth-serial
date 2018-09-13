@@ -212,7 +212,7 @@ RCT_EXPORT_METHOD(clear:(RCTPromiseResolveBlock)resolve)
 
     // Append to the buffer
     NSData *d = [NSData dataWithBytes:data length:length];
-    NSString *s = [[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding];
+    NSString *s = [d base64EncodedStringWithOptions:0];
     NSLog(@"Received %@", s);
 
     if (s) {
