@@ -2,11 +2,13 @@ package com.rusel.RCTBluetoothSerial;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.UUID;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.util.Base64;
 import android.util.Log;
 
 import static com.rusel.RCTBluetoothSerial.RCTBluetoothSerialPackage.TAG;
@@ -303,8 +305,7 @@ class RCTBluetoothSerialService {
             while (true) {
                 try {
                     bytes = mmInStream.read(buffer); // Read from the InputStream
-                    String data = new String(buffer, 0, bytes, "ISO-8859-1");
-
+                    String data = Base64.encodeToString(Arrays.copyOf(buffer,bytes),0);
                     mModule.onData(data); // Send the new data String to the UI Activity
                 } catch (Exception e) {
                     Log.e(TAG, "disconnected", e);
